@@ -4,98 +4,297 @@
 
 <head>
 
-  <title>Room Booking System</title>
+  <title>IIT BHU Room Booking System</title>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
 
+    * {
+
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+    }
+
     body {
 
-      font-family: Arial;
-      background: #f4f4f4;
-      padding: 40px;
+      font-family: "Poppins", sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0f172a,
+          #1e293b
+        );
+
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 30px;
 
     }
 
     .container {
 
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
+      width: 100%;
+      max-width: 650px;
 
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 40px;
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.25);
+
+      animation: fadeIn 0.5s ease;
 
     }
 
-    h1 {
+    @keyframes fadeIn {
+
+      from {
+
+        opacity: 0;
+        transform: translateY(20px);
+
+      }
+
+      to {
+
+        opacity: 1;
+        transform: translateY(0);
+
+      }
+
+    }
+
+    .top {
 
       text-align: center;
-      color: #333;
+      margin-bottom: 30px;
 
     }
 
-    label {
+    .top h1 {
 
-      font-weight: bold;
+      font-size: 34px;
+      color: #0f172a;
+
+      margin-bottom: 10px;
 
     }
 
-    input,
-    select,
-    button {
+    .top p {
+
+      color: #64748b;
+      font-size: 15px;
+
+    }
+
+    .google-btn {
+
+      display: block;
 
       width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      margin-bottom: 20px;
 
-      border-radius: 5px;
-      border: 1px solid gray;
+      text-align: center;
 
-      box-sizing: border-box;
+      text-decoration: none;
 
-    }
+      background: #16a34a;
 
-    button {
-
-      background: #007bff;
       color: white;
-      border: none;
-      cursor: pointer;
 
-      font-size: 16px;
+      padding: 14px;
+
+      border-radius: 12px;
+
+      font-weight: 600;
+
+      margin-bottom: 30px;
+
+      transition: 0.3s;
 
     }
 
-    button:hover {
+    .google-btn:hover {
 
-      background: #0056b3;
+      background: #15803d;
+
+    }
+
+    .input-group {
+
+      margin-bottom: 22px;
+
+    }
+
+    .input-group label {
+
+      display: block;
+
+      margin-bottom: 8px;
+
+      font-weight: 600;
+
+      color: #334155;
+
+    }
+
+    .input-group input,
+    .input-group select {
+
+      width: 100%;
+
+      padding: 14px;
+
+      border-radius: 12px;
+
+      border: 1px solid #cbd5e1;
+
+      font-size: 15px;
+
+      transition: 0.3s;
+
+      outline: none;
+
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+
+      border-color: #2563eb;
+
+      box-shadow:
+        0 0 0 4px rgba(37,99,235,0.15);
+
+    }
+
+    .row {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 20px;
 
     }
 
     .status {
 
+      margin-top: 10px;
+
       text-align: center;
-      font-weight: bold;
-      margin-bottom: 20px;
+
+      font-size: 18px;
+
+      font-weight: 700;
 
     }
 
-    .login-btn {
+    .buttons {
 
-      display: block;
-      text-align: center;
-      background: green;
+      display: flex;
+      gap: 15px;
+
+      margin-top: 20px;
+
+    }
+
+    .buttons button {
+
+      flex: 1;
+
+      padding: 15px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      font-size: 16px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: 0.3s;
+
+    }
+
+    .check-btn {
+
+      background: #f59e0b;
       color: white;
 
-      padding: 12px;
+    }
 
-      border-radius: 5px;
+    .check-btn:hover {
+
+      background: #d97706;
+
+    }
+
+    .book-btn {
+
+      background: #2563eb;
+      color: white;
+
+    }
+
+    .book-btn:hover {
+
+      background: #1d4ed8;
+
+    }
+
+    .footer {
+
+      margin-top: 30px;
+
+      text-align: center;
+
+    }
+
+    .footer a {
 
       text-decoration: none;
 
-      margin-bottom: 20px;
+      color: #2563eb;
+
+      font-weight: 600;
+
+    }
+
+    @media(max-width: 700px) {
+
+      .row {
+
+        grid-template-columns: 1fr;
+
+      }
+
+      .buttons {
+
+        flex-direction: column;
+
+      }
 
     }
 
@@ -107,11 +306,21 @@
 
   <div class="container">
 
-    <h1>Room Booking System</h1>
+    <div class="top">
+
+      <h1>
+        IIT BHU Room Booking
+      </h1>
+
+      <p>
+        Smart Scheduling & Google Calendar Integration
+      </p>
+
+    </div>
 
     <a
-      class="login-btn"
       href="/auth/google"
+      class="google-btn"
     >
       Login With Google
     </a>
@@ -121,70 +330,118 @@
       method="GET"
     >
 
-      <label>Meeting Title</label>
+      <div class="input-group">
 
-      <input
-        type="text"
-        name="title"
-        placeholder="Project Discussion"
-        required
-      >
+        <label>
+          Meeting Title
+        </label>
 
-      <label>Room</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Faculty Meeting"
+          required
+        >
 
-      <select
-        name="room"
-        id="room"
-      >
+      </div>
 
-        <option value="SeminarHall">
-          Seminar Hall
-        </option>
+      <div class="input-group">
 
-        <option value="ConferenceRoom">
-          Conference Room
-        </option>
+        <label>
+          Room
+        </label>
 
-        <option value="Lab101">
-          Lab 101
-        </option>
+        <select
+          name="room"
+          id="room"
+        >
 
-      </select>
+          <option value="SeminarHall">
+            Seminar Hall
+          </option>
 
-      <label>Select Date</label>
+          <option value="ConferenceRoom">
+            Conference Room
+          </option>
 
-      <input
-        type="date"
-        name="date"
-        id="date"
-        required
-      >
+          <option value="Lab101">
+            Lab 101
+          </option>
 
-      <label>Start Time</label>
+          <option value="MeetingRoomA">
+            Meeting Room A
+          </option>
 
-      <input
-        type="time"
-        name="start"
-        id="start"
-        required
-      >
+        </select>
 
-      <label>End Time</label>
+      </div>
 
-      <input
-        type="time"
-        name="end"
-        id="end"
-        required
-      >
+      <div class="row">
 
-      <label>Attendee Email</label>
+        <div class="input-group">
 
-      <input
-        type="email"
-        name="attendee"
-        placeholder="example@gmail.com"
-      >
+          <label>
+            Date
+          </label>
+
+          <input
+            type="date"
+            name="date"
+            id="date"
+            required
+          >
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            Attendee Email
+          </label>
+
+          <input
+            type="email"
+            name="attendee"
+            placeholder="example@gmail.com"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="input-group">
+
+          <label>
+            Start Time
+          </label>
+
+          <input
+            type="time"
+            name="start"
+            id="start"
+            required
+          >
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            End Time
+          </label>
+
+          <input
+            type="time"
+            name="end"
+            id="end"
+            required
+          >
+
+        </div>
+
+      </div>
 
       <div
         class="status"
@@ -193,18 +450,34 @@
 
       </div>
 
-      <button
-        type="button"
-        onclick="checkAvailability()"
-      >
-        Check Availability
-      </button>
+      <div class="buttons">
 
-      <button type="submit">
-        Book Room
-      </button>
+        <button
+          type="button"
+          class="check-btn"
+          onclick="checkAvailability()"
+        >
+          Check Availability
+        </button>
+
+        <button
+          type="submit"
+          class="book-btn"
+        >
+          Book Room
+        </button>
+
+      </div>
 
     </form>
+
+    <div class="footer">
+
+      <a href="/bookings">
+        View All Bookings
+      </a>
+
+    </div>
 
   </div>
 
