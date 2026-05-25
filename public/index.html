@@ -1,30 +1,29 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  />
+  >
 
   <title>
-    IIT BHU Smart Room Booking
+    IIT BHU Room Booking
   </title>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
-  />
+  >
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  />
+  >
 
   <style>
 
@@ -49,153 +48,43 @@
 
       color: white;
 
-      min-height: 100vh;
-
       padding: 30px;
 
     }
 
-    .main {
+    .container {
 
-      display: grid;
+      max-width: 1300px;
 
-      grid-template-columns: 280px 1fr;
-
-      gap: 25px;
-
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-
-      background:
-        rgba(255,255,255,0.05);
-
-      border-radius: 30px;
-
-      padding: 30px;
-
-      backdrop-filter: blur(10px);
-
-      border:
-        1px solid rgba(255,255,255,0.08);
-
-      height: calc(100vh - 60px);
-
-    }
-
-    .logo {
-
-      font-size: 28px;
-
-      font-weight: 700;
-
-      margin-bottom: 40px;
-
-    }
-
-    .logo span {
-
-      color: #8b5cf6;
-
-    }
-
-    .menu {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 20px;
-
-    }
-
-    .menu a {
-
-      text-decoration: none;
-
-      color: white;
-
-      padding: 16px;
-
-      border-radius: 18px;
-
-      background:
-        rgba(255,255,255,0.04);
-
-      transition: 0.3s;
-
-      font-size: 15px;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-    }
-
-    .menu a:hover {
-
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #6366f1
-        );
-
-      transform: translateX(5px);
-
-    }
-
-    /* CONTENT */
-
-    .content {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 25px;
+      margin: auto;
 
     }
 
     .top {
 
-      background:
-        rgba(255,255,255,0.05);
-
-      border-radius: 30px;
-
-      padding: 30px;
-
       display: flex;
 
       justify-content: space-between;
 
       align-items: center;
 
-      border:
-        1px solid rgba(255,255,255,0.08);
+      margin-bottom: 30px;
 
     }
 
-    .top h1 {
+    .title h1 {
 
-      font-size: 36px;
+      font-size: 40px;
 
     }
 
-    .top p {
+    .title p {
 
       color: #cbd5e1;
 
-      margin-top: 8px;
-
     }
 
-    .google-btn {
+    .btn {
 
       background:
         linear-gradient(
@@ -204,33 +93,29 @@
           #6366f1
         );
 
-      border: none;
-
-      padding: 16px 24px;
+      padding: 15px 22px;
 
       border-radius: 18px;
 
       color: white;
 
-      font-size: 15px;
+      text-decoration: none;
 
       font-weight: 600;
 
-      cursor: pointer;
+    }
 
-      transition: 0.3s;
+    .grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 25px;
 
     }
 
-    .google-btn:hover {
-
-      transform: translateY(-3px);
-
-    }
-
-    /* TIMELINE */
-
-    .timeline-box {
+    .card {
 
       background:
         rgba(255,255,255,0.05);
@@ -244,17 +129,13 @@
 
     }
 
-    .timeline-header {
+    .card h2 {
 
-      display: flex;
-
-      justify-content: space-between;
-
-      margin-bottom: 25px;
+      margin-bottom: 20px;
 
     }
 
-    .timeline {
+    form {
 
       display: flex;
 
@@ -264,163 +145,41 @@
 
     }
 
-    .slot {
+    input,
+    select,
+    button {
 
-      display: grid;
+      padding: 16px;
 
-      grid-template-columns: 120px 1fr;
+      border: none;
 
-      align-items: center;
+      border-radius: 16px;
 
-      gap: 20px;
-
-    }
-
-    .time {
-
-      color: #cbd5e1;
-
-      font-size: 14px;
-
-    }
-
-    .meeting {
-
-      padding: 18px;
-
-      border-radius: 18px;
-
-      font-weight: 600;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-    }
-
-    .busy {
-
-      background:
-        linear-gradient(
-          135deg,
-          #ef4444,
-          #dc2626
-        );
-
-    }
-
-    .available {
-
-      background:
-        linear-gradient(
-          135deg,
-          #10b981,
-          #059669
-        );
-
-    }
-
-    .seminar {
-
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #7c3aed
-        );
-
-    }
-
-    /* BOOKING */
-
-    .booking {
-
-      background:
-        rgba(255,255,255,0.05);
-
-      border-radius: 30px;
-
-      padding: 30px;
-
-      border:
-        1px solid rgba(255,255,255,0.08);
-
-    }
-
-    .booking h2 {
-
-      margin-bottom: 20px;
-
-      font-size: 28px;
-
-    }
-
-    form {
-
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 20px;
-
-    }
-
-    .full {
-
-      grid-column: span 2;
+      font-size: 15px;
 
     }
 
     input,
     select {
 
-      width: 100%;
-
-      padding: 16px;
-
-      border: none;
-
-      border-radius: 18px;
-
       background:
         rgba(255,255,255,0.08);
 
       color: white;
 
-      font-size: 15px;
-
-      outline: none;
-
-    }
-
-    input::placeholder {
-
-      color: #cbd5e1;
-
     }
 
     button {
 
-      border: none;
-
-      padding: 16px;
-
-      border-radius: 18px;
-
       cursor: pointer;
 
       font-weight: 600;
-
-      font-size: 15px;
 
     }
 
     .check-btn {
 
       background: #f59e0b;
-
       color: white;
 
     }
@@ -442,56 +201,49 @@
 
       margin-top: 20px;
 
-      padding: 16px;
+      padding: 15px;
 
-      border-radius: 18px;
+      border-radius: 16px;
 
       text-align: center;
-
-      font-weight: 600;
 
       background:
         rgba(255,255,255,0.08);
 
     }
 
-    @media(max-width: 1000px) {
+    .timeline {
 
-      .main {
+      display: flex;
 
-        grid-template-columns: 1fr;
+      flex-direction: column;
 
-      }
-
-      .sidebar {
-
-        height: auto;
-
-      }
+      gap: 15px;
 
     }
 
-    @media(max-width: 700px) {
+    .slot {
 
-      form {
+      background:
+        rgba(255,255,255,0.08);
+
+      padding: 18px;
+
+      border-radius: 18px;
+
+    }
+
+    .slot strong {
+
+      color: #a78bfa;
+
+    }
+
+    @media(max-width: 900px) {
+
+      .grid {
 
         grid-template-columns: 1fr;
-
-      }
-
-      .full {
-
-        grid-column: span 1;
-
-      }
-
-      .top {
-
-        flex-direction: column;
-
-        gap: 20px;
-
-        align-items: flex-start;
 
       }
 
@@ -503,175 +255,52 @@
 
 <body>
 
-  <div class="main">
+  <div class="container">
 
-    <!-- SIDEBAR -->
+    <div class="top">
 
-    <div class="sidebar">
+      <div class="title">
 
-      <div class="logo">
+        <h1>
+          IIT BHU Room Scheduler
+        </h1>
 
-        IIT <span>BHU</span>
+        <p>
+          Smart Meeting & Seminar Booking System
+        </p>
 
       </div>
 
-      <div class="menu">
+      <div>
 
-        <a href="/">
-          <i class="fa-solid fa-house"></i>
-          Dashboard
-        </a>
+        <a
+          href="/auth/google"
+          class="btn"
+        >
 
-        <a href="/bookings">
-          <i class="fa-solid fa-calendar-days"></i>
-          All Bookings
-        </a>
-
-        <a href="/auth/google">
-          <i class="fa-brands fa-google"></i>
           Connect Google
+
         </a>
 
         <a
           href="https://calendar.google.com"
           target="_blank"
+          class="btn"
         >
-          <i class="fa-solid fa-calendar"></i>
-          Open Google Calendar
+
+          Open Calendar
+
         </a>
 
       </div>
 
     </div>
 
-    <!-- CONTENT -->
-
-    <div class="content">
-
-      <!-- TOP -->
-
-      <div class="top">
-
-        <div>
-
-          <h1>
-            Smart Room Scheduler
-          </h1>
-
-          <p>
-            IIT BHU Meeting & Seminar Booking System
-          </p>
-
-        </div>
-
-        <button
-          class="google-btn"
-          onclick="window.location.href='/auth/google'"
-        >
-
-          Connect Google Calendar
-
-        </button>
-
-      </div>
-
-      <!-- TIMELINE -->
-
-      <div class="timeline-box">
-
-        <div class="timeline-header">
-
-          <h2>
-            Today's Timeline
-          </h2>
-
-          <p>
-            Real-Time Room Schedule
-          </p>
-
-        </div>
-
-        <div class="timeline">
-
-          <div class="slot">
-
-            <div class="time">
-              09:00 AM
-            </div>
-
-            <div class="meeting seminar">
-
-              Faculty Meeting
-
-              <span>
-                Seminar Hall
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="slot">
-
-            <div class="time">
-              10:30 AM
-            </div>
-
-            <div class="meeting busy">
-
-              Research Discussion
-
-              <span>
-                Busy
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="slot">
-
-            <div class="time">
-              12:00 PM
-            </div>
-
-            <div class="meeting available">
-
-              Available Slot
-
-              <span>
-                Free
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="slot">
-
-            <div class="time">
-              02:00 PM
-            </div>
-
-            <div class="meeting seminar">
-
-              Project Review
-
-              <span>
-                Conference Room
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
+    <div class="grid">
 
       <!-- BOOKING -->
 
-      <div class="booking">
+      <div class="card">
 
         <h2>
           Book A Room
@@ -761,6 +390,25 @@
 
       </div>
 
+      <!-- LIVE BOOKINGS -->
+
+      <div class="card">
+
+        <h2>
+          Live Room Schedule
+        </h2>
+
+        <div
+          class="timeline"
+          id="timeline"
+        >
+
+          Loading bookings...
+
+        </div>
+
+      </div>
+
     </div>
 
   </div>
@@ -781,11 +429,12 @@
       const end =
         document.querySelector('[name="end"]').value;
 
-      const response = await fetch(
+      const response =
+        await fetch(
 
-        `/check-availability?room=${room}&date=${date}&start=${start}&end=${end}`
+          `/check-availability?room=${room}&date=${date}&start=${start}&end=${end}`
 
-      );
+        );
 
       const result =
         await response.text();
@@ -795,6 +444,65 @@
         "Room Status : " + result;
 
     }
+
+    async function loadBookings() {
+
+      const response =
+        await fetch("/api/bookings");
+
+      const bookings =
+        await response.json();
+
+      const timeline =
+        document.getElementById("timeline");
+
+      if (bookings.length === 0) {
+
+        timeline.innerHTML =
+          "<p>No bookings yet</p>";
+
+        return;
+
+      }
+
+      timeline.innerHTML = "";
+
+      bookings.forEach((booking) => {
+
+        timeline.innerHTML += `
+
+          <div class="slot">
+
+            <strong>
+              ${booking.title}
+            </strong>
+
+            <br><br>
+
+            Room :
+            ${booking.room}
+
+            <br>
+
+            Date :
+            ${booking.date}
+
+            <br>
+
+            Time :
+            ${booking.start}
+            -
+            ${booking.end}
+
+          </div>
+
+        `;
+
+      });
+
+    }
+
+    loadBookings();
 
   </script>
 
