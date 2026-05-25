@@ -1,543 +1,511 @@
-require("dotenv").config();
+<!DOCTYPE html>
 
-const express = require("express");
+<html lang="en">
 
-const { google } = require("googleapis");
+<head>
 
-const { Low } = require("lowdb");
+  <meta charset="UTF-8">
 
-const { JSONFile } = require("lowdb/node");
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-const app = express();
+  <title>
+    IIT BHU Room Booking
+  </title>
 
-// ==========================
-// DATABASE SETUP
-// ==========================
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
-const adapter = new JSONFile("db.json");
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
 
-const db = new Low(adapter, {
-  bookings: [],
-});
+  <style>
 
-// ==========================
-// STATIC FILES
-// ==========================
+    * {
 
-app.use(express.static("public"));
-
-// ==========================
-// GOOGLE OAUTH
-// ==========================
-
-const oauth2Client =
-  new google.auth.OAuth2(
-
-    process.env.CLIENT_ID,
-
-    process.env.CLIENT_SECRET,
-
-    process.env.REDIRECT_URI
-
-  );
-
-// ==========================
-// LOGIN FLAG
-// ==========================
-
-let isAuthenticated = false;
-
-// ==========================
-// HOME ROUTE
-// ==========================
-
-app.get("/", (req, res) => {
-
-  res.sendFile(
-    __dirname + "/public/index.html"
-  );
-
-});
-
-// ==========================
-// GOOGLE LOGIN
-// ==========================
-
-app.get("/auth/google", (req, res) => {
-
-  const url =
-    oauth2Client.generateAuthUrl({
-
-      access_type: "offline",
-
-      scope: [
-        "https://www.googleapis.com/auth/calendar"
-      ],
-
-    });
-
-  res.redirect(url);
-
-});
-
-// ==========================
-// GOOGLE CALLBACK
-// ==========================
-
-app.get(
-  "/auth/google/callback",
-
-  async (req, res) => {
-
-    try {
-
-      const code =
-        req.query.code;
-
-      const { tokens } =
-        await oauth2Client.getToken(code);
-
-      oauth2Client.setCredentials(tokens);
-
-      isAuthenticated = true;
-
-      console.log(
-        "Google Calendar Connected"
-      );
-
-      res.send(`
-
-        <html>
-
-        <body style="font-family: Arial; padding: 40px;">
-
-          <h2>
-            Google Calendar Connected Successfully!
-          </h2>
-
-          <a href="/">
-            Go To Booking Form
-          </a>
-
-        </body>
-
-        </html>
-
-      `);
-
-    } catch (error) {
-
-      console.log(error);
-
-      res.send(
-        "Google Authentication Failed"
-      );
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
 
     }
 
-  }
+    body {
 
-);
+      font-family: "Poppins", sans-serif;
 
-// ==========================
-// CHECK AVAILABILITY
-// ==========================
+      background:
+        linear-gradient(
+          135deg,
+          #0f172a,
+          #111827
+        );
 
-app.get(
-  "/check-availability",
+      color: white;
 
-  async (req, res) => {
+      padding: 30px;
 
-    const {
-      room,
-      date,
-      start,
-      end
-    } = req.query;
+    }
 
-    await db.read();
+    .container {
 
-    const existingBooking =
-      db.data.bookings.find((booking) => {
+      max-width: 1300px;
 
-        return (
+      margin: auto;
 
-          booking.room === room &&
-          booking.date === date &&
+    }
 
-          start < booking.end &&
-          end > booking.start
+    .top {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 30px;
+
+    }
+
+    .title h1 {
+
+      font-size: 40px;
+
+    }
+
+    .title p {
+
+      color: #cbd5e1;
+
+    }
+
+    .btn {
+
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6366f1
+        );
+
+      padding: 15px 22px;
+
+      border-radius: 18px;
+
+      color: white;
+
+      text-decoration: none;
+
+      font-weight: 600;
+
+    }
+
+    .grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 25px;
+
+    }
+
+    .card {
+
+      background:
+        rgba(255,255,255,0.05);
+
+      border-radius: 30px;
+
+      padding: 30px;
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
+    }
+
+    .card h2 {
+
+      margin-bottom: 20px;
+
+    }
+
+    form {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 18px;
+
+    }
+
+    input,
+    select,
+    button {
+
+      padding: 16px;
+
+      border: none;
+
+      border-radius: 16px;
+
+      font-size: 15px;
+
+    }
+
+    input,
+    select {
+
+      background:
+        rgba(255,255,255,0.08);
+
+      color: white;
+
+    }
+
+    button {
+
+      cursor: pointer;
+
+      font-weight: 600;
+
+    }
+
+    .check-btn {
+
+      background: #f59e0b;
+      color: white;
+
+    }
+
+    .book-btn {
+
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6366f1
+        );
+
+      color: white;
+
+    }
+
+    .status {
+
+      margin-top: 20px;
+
+      padding: 15px;
+
+      border-radius: 16px;
+
+      text-align: center;
+
+      background:
+        rgba(255,255,255,0.08);
+
+    }
+
+    .timeline {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 15px;
+
+    }
+
+    .slot {
+
+      background:
+        rgba(255,255,255,0.08);
+
+      padding: 18px;
+
+      border-radius: 18px;
+
+    }
+
+    .slot strong {
+
+      color: #a78bfa;
+
+    }
+
+    @media(max-width: 900px) {
+
+      .grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="top">
+
+      <div class="title">
+
+        <h1>
+          IIT BHU Room Scheduler
+        </h1>
+
+        <p>
+          Smart Meeting & Seminar Booking System
+        </p>
+
+      </div>
+
+      <div>
+
+        <a
+          href="/auth/google"
+          class="btn"
+        >
+
+          Connect Google
+
+        </a>
+
+        <a
+          href="https://calendar.google.com"
+          target="_blank"
+          class="btn"
+        >
+
+          Open Calendar
+
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="grid">
+
+      <!-- BOOKING -->
+
+      <div class="card">
+
+        <h2>
+          Book A Room
+        </h2>
+
+        <form
+          action="/book-room"
+          method="GET"
+        >
+
+          <input
+            type="text"
+            name="title"
+            placeholder="Meeting Title"
+            required
+          >
+
+          <select name="room">
+
+            <option>
+              Seminar Hall
+            </option>
+
+            <option>
+              Conference Room
+            </option>
+
+            <option>
+              Lab 101
+            </option>
+
+          </select>
+
+          <input
+            type="date"
+            name="date"
+            required
+          >
+
+          <input
+            type="email"
+            name="attendee"
+            placeholder="Attendee Email"
+          >
+
+          <input
+            type="time"
+            name="start"
+            required
+          >
+
+          <input
+            type="time"
+            name="end"
+            required
+          >
+
+          <button
+            type="button"
+            class="check-btn"
+            onclick="checkAvailability()"
+          >
+
+            Check Availability
+
+          </button>
+
+          <button
+            type="submit"
+            class="book-btn"
+          >
+
+            Book Room
+
+          </button>
+
+        </form>
+
+        <div
+          class="status"
+          id="status"
+        >
+
+          Room status will appear here
+
+        </div>
+
+      </div>
+
+      <!-- LIVE BOOKINGS -->
+
+      <div class="card">
+
+        <h2>
+          Live Room Schedule
+        </h2>
+
+        <div
+          class="timeline"
+          id="timeline"
+        >
+
+          Loading bookings...
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    async function checkAvailability() {
+
+      const room =
+        document.querySelector('[name="room"]').value;
+
+      const date =
+        document.querySelector('[name="date"]').value;
+
+      const start =
+        document.querySelector('[name="start"]').value;
+
+      const end =
+        document.querySelector('[name="end"]').value;
+
+      const response =
+        await fetch(
+
+          `/check-availability?room=${room}&date=${date}&start=${start}&end=${end}`
 
         );
 
-      });
+      const result =
+        await response.text();
 
-    if (existingBooking) {
-
-      return res.send("Busy");
+      document.getElementById("status")
+        .innerHTML =
+        "Room Status : " + result;
 
     }
 
-    res.send("Available");
+    async function loadBookings() {
 
-  }
+      const response =
+        await fetch("/api/bookings");
 
-);
+      const bookings =
+        await response.json();
 
-// ==========================
-// BOOK ROOM
-// ==========================
+      const timeline =
+        document.getElementById("timeline");
 
-app.get("/book-room", async (req, res) => {
+      if (bookings.length === 0) {
 
-  if (!isAuthenticated) {
+        timeline.innerHTML =
+          "<p>No bookings yet</p>";
 
-    return res.send(`
+        return;
 
-      <html>
+      }
 
-      <body style="font-family: Arial; padding: 40px;">
+      timeline.innerHTML = "";
 
-        <h2>
-          Please Login With Google First
-        </h2>
+      bookings.forEach((booking) => {
 
-        <a href="/auth/google">
-          Login With Google
-        </a>
+        timeline.innerHTML += `
 
-      </body>
+          <div class="slot">
 
-      </html>
+            <strong>
+              ${booking.title}
+            </strong>
 
-    `);
+            <br><br>
 
-  }
+            Room :
+            ${booking.room}
 
-  const {
+            <br>
 
-    title,
-    room,
-    date,
-    start,
-    end,
-    attendee
+            Date :
+            ${booking.date}
 
-  } = req.query;
+            <br>
 
-  await db.read();
+            Time :
+            ${booking.start}
+            -
+            ${booking.end}
 
-  // ==========================
-  // CONFLICT DETECTION
-  // ==========================
+          </div>
 
-  const existingBooking =
-    db.data.bookings.find((booking) => {
+        `;
 
-      return (
+      });
 
-        booking.room === room &&
-        booking.date === date &&
+    }
 
-        start < booking.end &&
-        end > booking.start
+    loadBookings();
 
-      );
+  </script>
 
-    });
+</body>
 
-  if (existingBooking) {
-
-    return res.send(`
-
-      <html>
-
-      <body style="font-family: Arial; padding: 40px;">
-
-        <h2>
-          Room already booked!
-        </h2>
-
-        <a href="/">
-          Go Back
-        </a>
-
-      </body>
-
-      </html>
-
-    `);
-
-  }
-
-  // ==========================
-  // GOOGLE CALENDAR
-  // ==========================
-
-  const calendar =
-    google.calendar({
-
-      version: "v3",
-      auth: oauth2Client,
-
-    });
-
-  const startDateTime =
-    `${date}T${start}:00+05:30`;
-
-  const endDateTime =
-    `${date}T${end}:00+05:30`;
-
-  // ==========================
-  // EVENT OBJECT
-  // ==========================
-
-  const event = {
-
-    summary: title,
-
-    location: room,
-
-    description:
-      "Room booked successfully",
-
-    start: {
-
-      dateTime: startDateTime,
-
-      timeZone: "Asia/Kolkata",
-
-    },
-
-    end: {
-
-      dateTime: endDateTime,
-
-      timeZone: "Asia/Kolkata",
-
-    },
-
-    attendees: attendee
-      ? [{ email: attendee }]
-      : [],
-
-  };
-
-  try {
-
-    // ==========================
-    // CREATE EVENT
-    // ==========================
-
-    await calendar.events.insert({
-
-      calendarId: "primary",
-
-      resource: event,
-
-    });
-
-    // ==========================
-    // SAVE BOOKING
-    // ==========================
-
-    db.data.bookings.push({
-
-      title,
-      room,
-      date,
-      start,
-      end,
-      attendee,
-
-    });
-
-    await db.write();
-
-    res.send(`
-
-      <html>
-
-      <body style="font-family: Arial; padding: 40px;">
-
-        <h2>
-          Room Booked Successfully!
-        </h2>
-
-        <a href="/">
-          Book Another Room
-        </a>
-
-        <br><br>
-
-        <a href="/bookings">
-          View All Bookings
-        </a>
-
-      </body>
-
-      </html>
-
-    `);
-
-  } catch (error) {
-
-    console.log(error);
-
-    res.send(`
-
-      <html>
-
-      <body style="font-family: Arial; padding: 40px;">
-
-        <h2>
-          Error Booking Room
-        </h2>
-
-        <a href="/">
-          Go Back
-        </a>
-
-      </body>
-
-      </html>
-
-    `);
-
-  }
-
-});
-
-// ==========================
-// SHOW BOOKINGS
-// ==========================
-
-app.get("/bookings", async (req, res) => {
-
-  await db.read();
-
-  let html = `
-
-    <html>
-
-    <head>
-
-      <title>
-        All Bookings
-      </title>
-
-      <style>
-
-        body {
-
-          font-family: Arial;
-          padding: 40px;
-          background: #f4f4f4;
-
-        }
-
-        table {
-
-          width: 100%;
-          border-collapse: collapse;
-          background: white;
-
-        }
-
-        th, td {
-
-          padding: 12px;
-          border: 1px solid gray;
-          text-align: center;
-
-        }
-
-        th {
-
-          background: #ddd;
-
-        }
-
-      </style>
-
-    </head>
-
-    <body>
-
-      <h1>
-        All Room Bookings
-      </h1>
-
-      <a href="/">
-        Back To Home
-      </a>
-
-      <br><br>
-
-      <table>
-
-        <tr>
-
-          <th>Title</th>
-          <th>Room</th>
-          <th>Date</th>
-          <th>Start</th>
-          <th>End</th>
-          <th>Attendee</th>
-          <th>Status</th>
-
-        </tr>
-
-  `;
-
-  db.data.bookings.forEach((booking) => {
-
-    html += `
-
-      <tr>
-
-        <td>${booking.title}</td>
-
-        <td>${booking.room}</td>
-
-        <td>${booking.date}</td>
-
-        <td>${booking.start}</td>
-
-        <td>${booking.end}</td>
-
-        <td>${booking.attendee || "-"}</td>
-
-        <td>Busy</td>
-
-      </tr>
-
-    `;
-
-  });
-
-  html += `
-
-      </table>
-
-    </body>
-
-    </html>
-
-  `;
-
-  res.send(html);
-
-});
-
-// ==========================
-// START SERVER
-// ==========================
-
-app.listen(3000, () => {
-
-  console.log(
-    "Server running on port 3000"
-  );
-
-});
+</html>
